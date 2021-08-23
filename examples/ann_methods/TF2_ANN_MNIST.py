@@ -89,10 +89,10 @@ p_test = model.predict(x_test).argmax(axis=1)
 cm= confusion_matrix(y_test, p_test)
 plot_confusion_matrix(cm, list(range(10)))
 
+#%%
 
-
-
-
-
-
-
+#Showing some missclassied ex
+missclassified_idx = np.where(p_test != y_test)[0]
+i = np.random.choice(missclassified_idx)
+plt.imshow(x_test[i], cmap='gray')
+plt.title("True label: %s Predicted: %s" % (y_test[i], p_test[i]));
