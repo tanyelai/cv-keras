@@ -1,6 +1,6 @@
 import tensorflow as tf
 import matplotlib.pyplot as plt
-from tensorflow.keras.layers import Input, Conv2D, Dense, Dropout, Flatten, GlobalMaxPooling2D
+from tensorflow.keras.layers import Input, Conv2D, Dense, Dropout, Flatten
 from tensorflow.keras.models import Model
 import numpy as np
 
