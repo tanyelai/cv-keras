@@ -62,7 +62,7 @@ data_generator = tf.keras.preprocessing.image.ImageDataGenerator(width_shift_ran
                                                                  horizontal_flip=True)
 train_generator = data_generator.flow(x_train, y_train, batch_size)
 steps_per_epoch = x_train.shape[0]
-r = model.fit_generator(train_generator, validation_data(x_test, y_test, steps_per_epoch=steps_per_epoch, epochs=10))
+r = model.fit_generator(train_generator, validation_data=(x_test, y_test), steps_per_epoch=steps_per_epoch, epochs=10)
 
 
 
