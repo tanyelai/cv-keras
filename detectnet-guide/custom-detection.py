@@ -10,3 +10,5 @@ while display.IsStreaming():
 	detections = net.Detect(img)
 	display.Render(img)
 	display.SetStatus("Object Detection | Network {:.0f} FPS".format(net.GetNetworkFPS()))
+
+	
