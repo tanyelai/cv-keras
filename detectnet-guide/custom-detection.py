@@ -1,17 +1,12 @@
-import tensorflow as tf
-import numpy as np
-from mpl_toolkits.mplot3d import Axes3D
-import matplotlib.pyplot as plt
+import jetson.inference
+import jetson.utils
 
-N = 1000 
-X = np.random.random((N, 2))*6-3 #uniformly distributed between (-3,3)
-Y = np.cos(2*X[:,0]) + np.cos(3*X[:,1])
+net = jetson.inference.detectNet(argv=["--model=/home/user/jetson-inference/python/training/detection/ssd/models/X/ssd-mobilenet.onnx", "--labels=/home/user/jetson-inference/python/training/detection/ssd/models/X/labels.txt", "--input-blob=input_0", "--output-cvg=scores", "--output-bbox=boxes"], threshold=0.5)
+camera = jetson.utils.videoSource("csi://0")  # '/dev/video0' for V4L2
+display = jetson.utils.videoOutput("display://0")   # 'my_video.mp4' for file
 
-# y = cos(2*x1) + cos(3*x2)
-
-#%%
-
-fig = plt.figure()
-ax = fig.add_subplot(111, projection='3d')
-ax.scatter(X[:,0],X[:,1], Y)
-plt.show()
+while display.IsStreaming():
+	img = camera.Capture()
+	detections = net.Detect(img)
+	display.Render(img)
+	display.SetStatus("Object Detection | Network {:.0f} FPS".format(net.GetNetworkFPS()))
